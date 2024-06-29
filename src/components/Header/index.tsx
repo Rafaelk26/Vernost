@@ -1,0 +1,123 @@
+import { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+
+// Logo
+import Logo from '../../assets/Logo/Vernost-Black.png';
+import LogoWhite from '../../assets/Logo/Vernost-White.png';
+
+// Icons
+import Carrinho from '../../assets/Icons/Carrinho.png';
+import Compras from '../../assets/Icons/Compras.png';
+import User from '../../assets/Icons/User.png';
+
+import { IoMenu } from "react-icons/io5";
+
+export function Header() {
+    // Variável para tamanho da janela
+    const [screen, setScreen] = useState<boolean>(false);
+    // Variável para clicar no botão menu
+    const [menu, setMenu] = useState<boolean>(false);
+
+    // Função para condicional do header
+    const handleResizing = useCallback(() => {
+        if (window.innerWidth < 600) {
+            setScreen(true);
+        } else {
+            setScreen(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        // Escuta o evento de redimensionamento
+        window.addEventListener('resize', handleResizing);
+
+        // Verifica o tamanho inicial da tela
+        handleResizing();
+
+        // Limpa o event listener quando o componente for desmontado
+        return () => {
+            window.removeEventListener('resize', handleResizing);
+        };
+    }, [handleResizing]);
+
+    return (
+        <header className='max-w-7xl w-full h-20 flex items-center relative mx-auto bg-white'>
+            {/* Mobile */}
+            {screen ? (
+                <>
+                    <nav className='w-full flex justify-between items-center px-4'>
+                        {/* Menu */}
+                        <button 
+                        onClick={() => setMenu(!menu)}
+                        className='absolute left-3'>
+                            <IoMenu size={30} />
+                        </button>
+                        {/* Logo */}
+                        <img 
+                        className='w-32 mx-auto'
+                        src={Logo} 
+                        alt="Vernost Original" />
+                    </nav>
+
+                    {menu && (
+                        <div className='fixed inset-0 bg-black opacity-95 flex justify-center z-50 p-4'>
+                            <div className='w-full flex justify-center items-center px-4'>
+                                
+                                <Link to={'/'}>
+                                    <img 
+                                    className='w-28'
+                                    src={LogoWhite} 
+                                    alt="Vernost Original" />
+                                </Link>
+                                
+                                <button
+                                onClick={() => setMenu(false)}
+                                className='text-white font-bold text-2xl absolute right-16'>
+                                    X
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </>
+            ) : (
+                <>
+                    {/* Desktop */}
+                    <nav className='w-full flex justify-between items-center px-2'>
+                        {/* Header left */}
+                        <div className='flex gap-6 items-center'>
+                            <button className="w-24 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                                Login
+                            </button>
+                            <a href="#" className="text-black hover:underline font-bold text-lg">
+                                Sobre nós
+                            </a>
+                        </div>
+
+                        {/* Header center */}
+                        <div className='flex justify-center'>
+                                <Link to={'/'}>
+                                    <img 
+                                    className='w-36'
+                                    src={Logo} 
+                                    alt="Vernost Original" />
+                                </Link>
+                        </div>
+
+                        {/* Header right */}
+                        <div className='flex items-center gap-14 pe-10'>
+                            <a href="#">
+                                <img className='w-8' src={Compras} alt="Compras" />
+                            </a>
+                            <a href="#">
+                                <img className='w-6' src={Carrinho} alt="Carrinho" />
+                            </a>
+                            <a href="#">
+                                <img className='w-6' src={User} alt="Usuário" />
+                            </a>
+                        </div>
+                    </nav>
+                </>
+            )}
+        </header>
+    );
+}
