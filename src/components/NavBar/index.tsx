@@ -15,7 +15,7 @@ export function NavBar() {
                         className="h-full w-full object-cover"
                         />
                     </div>
-                    <span className="text-white font-bold mt-1">Todos</span>
+                    <span className="text-white Ky font-medium mt-1">Todos</span>
                 </div>
                 <div className="flex flex-col justify-center items-center flex-shrink-0">
                     <div className="h-16 w-16 rounded-full overflow-hidden transition-all
@@ -27,7 +27,7 @@ export function NavBar() {
                         className="h-full w-full object-cover"
                         />
                     </div>
-                    <span className="text-white font-bold mt-1">Casual</span>
+                    <span className="text-white Ky font-medium mt-1">Casual</span>
                 </div>
                 <div className="flex flex-col justify-center items-center flex-shrink-0">
                     <div className="h-16 w-16 rounded-full overflow-hidden transition-all
@@ -39,7 +39,7 @@ export function NavBar() {
                         className="h-full w-full object-cover"
                         />
                     </div>
-                    <span className="text-white font-bold mt-1">Social</span>
+                    <span className="text-white Ky font-medium mt-1">Social</span>
                 </div>
                 <div className="flex flex-col justify-center items-center flex-shrink-0">
                     <div className="h-16 w-16 rounded-full overflow-hidden transition-all
@@ -51,7 +51,7 @@ export function NavBar() {
                         className="h-full w-full object-cover"
                         />
                     </div>
-                    <span className="text-white font-bold mt-1">Vintage</span>
+                    <span className="text-white Ky font-medium mt-1">Vintage</span>
                 </div>
                 <div className="flex flex-col justify-center items-center flex-shrink-0">
                     <div className="h-16 w-16 rounded-full overflow-hidden transition-all
@@ -63,7 +63,7 @@ export function NavBar() {
                         className="h-full w-full object-cover"
                         />
                     </div>
-                    <span className="text-white font-bold mt-1">Gala</span>
+                    <span className="text-white Ky font-medium mt-1">Gala</span>
                 </div>
                 <div className="flex flex-col justify-center items-center flex-shrink-0">
                     <div className="h-16 w-16 rounded-full overflow-hidden transition-all
@@ -75,7 +75,7 @@ export function NavBar() {
                         className="h-full w-full object-cover"
                         />
                     </div>
-                    <span className="text-white font-bold mt-1">Lounge</span>
+                    <span className="text-white Ky font-medium mt-1">Lounge</span>
                 </div>
             </div>
         </div>

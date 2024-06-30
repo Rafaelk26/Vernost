@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Importando a fonte personalizada */
+@font-face {
+    font-family: 'Khyay';
+    src: url('/src/fonts/Khyay-Regular.ttf') format('truetype');
+}
+
+/* Aplicando a fonte personalizada globalmente */
+.Ky{
+    font-family: 'Khyay', sans-serif;
+}
+
+body{
+    background-color: black;
+    color: white;
+}

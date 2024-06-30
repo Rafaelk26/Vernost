@@ -41,7 +41,7 @@ export function Header() {
     }, [handleResizing]);
 
     return (
-        <header className='max-w-7xl w-full h-20 flex items-center relative mx-auto bg-white'>
+        <header className='w-full h-20 flex items-center relative mx-auto bg-white'>
             {/* Mobile */}
             {screen ? (
                 <>
@@ -85,10 +85,12 @@ export function Header() {
                     <nav className='w-full flex justify-between items-center px-2'>
                         {/* Header left */}
                         <div className='flex gap-6 items-center'>
-                            <button className="w-24 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                            <button className="w-24 p-2 bg-blue-500 text-white rounded-lg Ky transition-all 
+                            hover:bg-blue-600">
                                 Login
                             </button>
-                            <a href="#" className="text-black hover:underline font-bold text-lg">
+                            <a href="#" className="text-black mt-1 text-lg Ky transition-all
+                            hover:font-semibold">
                                 Sobre nós
                             </a>
                         </div>

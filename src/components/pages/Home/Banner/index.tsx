@@ -1,4 +1,8 @@
+// Components
+import { Button1 } from '../../../Buttons/Button1';
+// Images
 import Background from '../../../../assets/imagens/Mockup Camisa Preta.png';
+// Container
 import { Container } from '../../../Container';
 
 export function Banner() {
@@ -17,13 +21,16 @@ export function Banner() {
             
             {/* Conteúdo sobre a imagem */}
             <Container>
-                <div className="relative w-full h-full flex items-center justify-start z-20">
-                    <div className="text-white text-center">
-                        <h1 className="text-5xl font-bold mb-4">ELEGÂNCIA</h1>
-                        <p className="text-lg mb-4">Esse é seu jeito de <span>VER</span></p>
-                        <button className="bg-white text-black px-6 py-3 rounded shadow-md hover:bg-gray-200 hover:font-bold transition duration-300">
-                            Conferir Agora
-                        </button>
+                <div className="relative w-full h-full flex items-center justify-center z-20 -mt-2
+                md:justify-start">
+                    <div className="text-white text-center flex flex-col items-center 
+                    md:text-start md:items-start">
+                        <h1 className="text-6xl mb-1 Ky">Elegância</h1>
+                        <p className="text-2xl mb-12 font-light w-48 Ky">
+                            Esse é seu jeito novo de
+                            <span> VER</span>
+                        </p>
+                        <Button1 />
                     </div>
                 </div>
             </Container>
