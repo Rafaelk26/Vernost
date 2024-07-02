@@ -50,7 +50,7 @@ export function Header() {
                         <button 
                         onClick={() => setMenu(!menu)}
                         className='absolute left-3'>
-                            <IoMenu size={30} />
+                            <IoMenu size={30} fill='#000' color='#000' />
                         </button>
                         {/* Logo */}
                         <img 
