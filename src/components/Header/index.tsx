@@ -85,11 +85,13 @@ export function Header() {
                     <nav className='w-full flex justify-between items-center px-2'>
                         {/* Header left */}
                         <div className='flex gap-6 items-center'>
-                            <button className="w-24 p-2 bg-blue-500 text-white rounded-lg Ky transition-all 
-                            hover:bg-blue-600">
-                                Login
-                            </button>
-                            <a href="#" className="text-black mt-1 text-lg Ky transition-all
+                            <Link to={'/login'}>
+                                    <button className="w-24 p-2 bg-blue-500 text-white rounded-lg Ky transition-all 
+                                    hover:bg-blue-600">
+                                        Login
+                                    </button>
+                            </Link>
+                            <a href="/sobre" className="text-black mt-1 text-lg Ky transition-all
                             hover:font-semibold">
                                 Sobre nós
                             </a>

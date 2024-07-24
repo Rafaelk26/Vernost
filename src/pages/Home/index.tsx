@@ -5,7 +5,7 @@ import { Slogan } from "../../components/pages/Home/Slogan"
 import { Collection } from "../../components/pages/Home/Collections"
 import { Advertising } from "../../components/pages/Home/Advertising"
 import { Vernost } from "../../components/Vernost";
-import {Footer} from "../../components/Footer"
+import { Footer } from "../../components/Footer"
 
 export function Home(){
     return(

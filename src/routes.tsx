@@ -48,7 +48,7 @@ const router = createBrowserRouter([
     },
     {
         element: <Compras />,
-        path: "/minhas-compras/userId:"
+        path: "/minhas-compras/:userId"
     },
     {
         element: <Direitos />,
@@ -60,15 +60,15 @@ const router = createBrowserRouter([
     },
     {
         element: <Perfil />,
-        path: "/perfil/userId:"
+        path: "/perfil/:userId"
     },
     {
         element: <Produtos />,
-        path: "/produtos/show/"
+        path: "/produtos/show/:id"
     },
     {
         element: <DetalheProdutos />,
-        path: "/produtos/detalhes/id:"
+        path: "/produtos/detalhes/:id"
     },
     {
         element: <Sobre />,
@@ -107,11 +107,11 @@ const router = createBrowserRouter([
     },
     {
         element: <Private><EditarDetalheProduto /></Private>,
-        path: "/admin/produto/editar/id:"
+        path: "/admin/produto/editar/:id"
     },
     {
         element: <Private><User /></Private>,
-        path: "/admin/user/id:"
+        path: "/admin/user/:id"
     },
 ])
 

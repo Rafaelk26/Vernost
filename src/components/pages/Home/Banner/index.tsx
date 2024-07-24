@@ -14,7 +14,7 @@ export function Banner() {
             
             {/* Imagem de fundo */}
             <img 
-                className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-80"
                 src={Background}
                 alt="Background"
             />
