@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
 
-// Definindo o tipo do produto
+
 interface Product {
     photoProduct: string;
     nameProduct: string;
@@ -10,11 +10,10 @@ interface Product {
     qtdProduct: number;
 }
 
-// Definindo o tipo do contexto
 interface CartContextType {
     cart: Product[];
     addCart: (product: Product) => void;
-    removeCart: (product: Product) => void; // Adicione a função de remover
+    removeCart: (product: Product) => void;
 }
 
 // Criando contexto com valor padrão
@@ -33,7 +32,6 @@ const cartReducer = (state: Product[], action: { type: string; payload: Product 
     }
 }
 
-// Tipando o CartProvider props
 interface CartProviderProps {
     children: ReactNode;
 }

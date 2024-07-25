@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
-// Conte
+// Context
 import { useCart } from '../../contexts/Cart';
 
 // Logo
@@ -116,7 +116,7 @@ export function Header() {
 
                         {/* Header right */}
                         <div className='flex items-center gap-14 pe-10'>
-                            <a href="#">
+                            <a href="/minhas-compras/">
                                 <img className='w-8' src={Compras} alt="Compras" />
                             </a>
                             <a href="/produtos/carrinho/">
