@@ -3,6 +3,7 @@ import { RouterProvider } from 'react-router-dom';
 
 // Context
 import { CartProvider } from './contexts/Cart';
+import { UserProvider } from './contexts/User';
 
 // CSS
 import './index.css'
@@ -16,9 +17,11 @@ import './App.css'
 function App() {
   return (
     <>
-      <CartProvider>
-        <RouterProvider router={router}/>
-      </CartProvider>
+      <UserProvider>
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
+      </UserProvider>
     </>
   )
 }

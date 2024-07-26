@@ -1,9 +1,9 @@
-// Header.js
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 // Context
 import { useCart } from '../../contexts/Cart';
+import { useUser } from '../../contexts/User';
 
 // Logo
 import Logo from '../../assets/Logo/Vernost-Black.png';
@@ -24,6 +24,7 @@ export function Header() {
 
     // Obtenha o contexto do carrinho
     const { cart } = useCart();
+    const { user, logout } = useUser();
 
     // Função para condicional do header
     const handleResizing = useCallback(() => {
@@ -92,12 +93,14 @@ export function Header() {
                     <nav className='w-full flex justify-between items-center px-2'>
                         {/* Header left */}
                         <div className='flex gap-6 items-center'>
-                            <Link to={'/login'}>
-                                <button className="w-24 p-2 bg-blue-500 text-white rounded-lg Ky transition-all 
-                                    hover:bg-blue-600">
-                                    Login
-                                </button>
-                            </Link>
+                            {!user ? (
+                                <Link to={'/login'}>
+                                    <button className="w-24 p-2 bg-blue-500 text-white rounded-lg Ky transition-all 
+                                        hover:bg-blue-600">
+                                        Login
+                                    </button>
+                                </Link>
+                            ) : null}
                             <a href="/sobre" className="text-black mt-1 text-lg Ky transition-all
                             hover:font-semibold">
                                 Sobre nós
@@ -127,9 +130,18 @@ export function Header() {
                                     </span>
                                 )}
                             </a>
-                            <a href="#">
-                                <img className='w-6' src={User} alt="Usuário" />
-                            </a>
+                            {user ? (
+                                <div className="flex items-center gap-4">
+                                    <img className='w-8 h-8 rounded-full' src={user.photoUser} alt={user.fullName} />
+                                    <button onClick={logout} className="text-black Ky transition-all hover:font-semibold">
+                                        Logout
+                                    </button>
+                                </div>
+                            ) : (
+                                <a href="#">
+                                    <img className='w-6' src={User} alt="Usuário" />
+                                </a>
+                            )}
                         </div>
                     </nav>
                 </>

@@ -48,7 +48,7 @@ const router = createBrowserRouter([
     },
     {
         element: <Compras />,
-        path: "/minhas-compras/:userId"
+        path: "/minhas-compras/"
     },
     {
         element: <Direitos />,
