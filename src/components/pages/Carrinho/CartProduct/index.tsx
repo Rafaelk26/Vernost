@@ -21,20 +21,40 @@ export function CartProduct() {
 
     const { cart, removeCart } = useCart();
 
-    const [cartArray, setCartArray] = useState<Product[]>(cart);
+    const [ cartArray, setCartArray ] = useState<Product[]>(cart);
+    const [ priceActually, setPriceActually ] = useState<string>('')
 
+    // Resgata os itens do context cart para a página de carrinho
     useEffect(() => {
         setCartArray(cart);
     }, [cart]);
 
+    // Atualiza preço do sub-total
+    useEffect(() => {
+        const prices = document.getElementsByClassName('price-product');
+        let total = 0;
+        for (let i = 0; i < prices.length; i++) {
+            const priceElement = prices[i] as HTMLElement;
+            const price = parseFloat(priceElement.innerText.replace('R$ ', ''));
+            if (!isNaN(price)) {
+                total += price;
+            }
+        }
+        setPriceActually(total.toFixed(2));
+    }, [cartArray]);
+
+
     return(
         <>
-            <section className='w-full h-screen'>
+            <section className='w-full h-screen mb-28
+            md:mb-0'>
                 <div className='w-full mt-16'>
                     <h1 className='Ky text-4xl'>Carrinho</h1>
                 </div>
 
-                <div className='w-full mt-10 flex justify-between'>
+                <div className='w-full mt-10 flex flex-col justify-between gap-6
+                sm:flex-col sm:gap-6
+                md:flex-row md:mb-0 md:gap-2'>
                     {cartArray.length > 0 ? (
                         <table className='w-full h-96 md:max-w-2xl outline outline-2 outline-white rounded-xl'>
                             <div className='w-full my-4 ms-4 p-4'>
@@ -61,7 +81,7 @@ export function CartProduct() {
                                         </td>
                                         {/* Price */}
                                         <td>
-                                            <p className='Ky'>R$ {p.priceProduct.toFixed(2)}</p>
+                                            <p className='Ky'>R$ <span className='price-product'>{p.priceProduct.toFixed(2)}</span></p>
                                         </td>
                                         {/* Size */}
                                         <td>
@@ -98,12 +118,7 @@ export function CartProduct() {
                     }
                      
                     
-                          
-
-                    
-
                     {/* Sub-total */}
-
 
                     {cartArray.length > 0 ? (
                         <div className='w-full md:max-w-80 md:max-h-44'>
@@ -111,7 +126,7 @@ export function CartProduct() {
                                 <h4 className='Ky ps-6 pe-6 pt-6 text-xl'>Sub-total</h4>
                                 <div className='w-full flex justify-between items-center px-6'>
                                     <h1 className='Ky mt-6 text-2xl text-green-600'>R$</h1>
-                                    <span className='Ky mt-4 text-4xl text-green-600'>69,99</span>
+                                    <span className='Ky mt-4 text-4xl text-green-600'>{priceActually}</span>
                                 </div>
                             </div>
                             <button
@@ -127,11 +142,11 @@ export function CartProduct() {
                                     <h4 className='Ky ps-6 pe-6 pt-6 text-xl'>Sub-total</h4>
                                     <div className='w-full flex justify-between items-center px-6'>
                                         <h1 className='Ky mt-6 text-2xl text-gray-500'>R$</h1>
-                                        <span className='Ky mt-4 text-4xl text-gray-500'>0,00</span>
+                                        <span className='Ky mt-4 text-4xl text-gray-500'>0.00</span>
                                     </div>
                                 </div>
                                 <button
-                                    className='w-full mt-4 p-3 bg-gray-500 text-black Ky text-xl rounded-lg'
+                                    className='w-full mt-4 p-3 bg-gray-500 text-black Ky text-xl rounded-lg cursor-default'
                                     type='button'>
                                     Finalizar Compra
                                 </button>
