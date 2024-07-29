@@ -43,7 +43,7 @@ interface UserProviderProps {
     children: ReactNode;
 }
 
-const SECRET_KEY = 'my-very-secure-secret-key';
+const SECRET_KEY = 'my-key-vernost-app';
 
 export const UserProvider = ({ children }: UserProviderProps) => {
     const [user, setUser] = useState<Partial<User> | null>(null);
@@ -63,6 +63,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
                 id: fakeUser.id,
                 fullName: fakeUser.fullName,
                 email: fakeUser.email,
+                username: fakeUser.username,
                 photoUser: fakeUser.photoUser,
             };
             setUser(loggedInUser);

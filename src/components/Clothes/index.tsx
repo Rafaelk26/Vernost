@@ -14,7 +14,7 @@ interface clothingProps {
 
 export function ClothingItem() {
     return (
-        <div key={'0'} id='0' className="w-72 flex flex-col bg-white h-max">
+        <div key={'0'} id='0' className="w-72 flex flex-col bg-white h-max transition-all hover:scale-105">
             <Link to={`/produtos/detalhes/${0}`}>
                 <div className="w-full h-72 bg-gray-200 overflow-hidden mb-2">
                     <img

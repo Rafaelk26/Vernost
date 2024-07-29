@@ -132,13 +132,15 @@ export function Header() {
                             </a>
                             {user ? (
                                 <div className="flex items-center gap-4">
-                                    <img className='w-8 h-8 rounded-full' src={user.photoUser} alt={user.fullName} />
+                                    <a href="/perfil">
+                                        <img className='w-8 h-8 rounded-full' src={user.photoUser} alt={user.fullName} />
+                                    </a>
                                     <button onClick={logout} className="text-black Ky transition-all hover:font-semibold">
                                         Logout
                                     </button>
                                 </div>
                             ) : (
-                                <a href="#">
+                                <a href="/perfil">
                                     <img className='w-6' src={User} alt="Usuário" />
                                 </a>
                             )}

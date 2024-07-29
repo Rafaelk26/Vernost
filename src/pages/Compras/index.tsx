@@ -85,7 +85,7 @@ export function Compras() {
         <>
             <Header />
             <h1>Compras do Usuário {userId}</h1>
-            {/* Aqui você pode renderizar as compras do usuário */}
+            
         </>
     );
 }
