@@ -13,6 +13,11 @@ export function Detail() {
     const [price, setPrice] = useState<number>(69.99);
     const [qtd, setQtd] = useState<string>('');
     const [size, setSize] = useState<string>('P');
+    const [color, setColor] = useState<string>('');
+
+    useEffect(()=> {
+        setColor('blue')
+    }, [])
 
     useEffect(() => {
         setPriceDefault(priceDefault);
@@ -59,7 +64,7 @@ export function Detail() {
                                 {['P', 'M', 'G', 'GG'].map((s) => (
                                     <button
                                         key={s}
-                                        className={`w-max h-5 bg-white flex justify-center items-center rounded transition-colors ${size === s ? 'bg-slate-400' : ''}`}
+                                        className={`w-max h-7 border-2 flex justify-center items-center border-black rounded transition-colors ${size === s ? 'bg-slate-600' : 'bg-white'}`}
                                         onClick={() => setSize(s)}
                                     >
                                         <p className='text-black Ky p-1 mt-1 text-2xl'>{s}</p>
@@ -78,9 +83,10 @@ export function Detail() {
                                 className='w-10 bg-black rounded outline outline-1 outline-white p-1'
                             />
                         </div>
+
+                        {/* Colors clothes */}
                         <div className='w-full flex gap-4 mt-6 justify-center md:justify-start md:gap-2'>
-                            <div className='w-6 h-6 outline outline-2 outline-white bg-red-600 rounded-full'></div>
-                            <div className='w-6 h-6 outline outline-2 outline-white bg-green-600 rounded-full'></div>
+                            <div className={`w-6 h-6 outline outline-2 outline-white bg-${color}-500 rounded-full`}></div>
                         </div>
                         <div className='w-full mt-6 flex justify-center md:justify-start md:mt-4'>
                             <button

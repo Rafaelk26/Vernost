@@ -41,7 +41,7 @@ export function Perfil() {
                 <Header />
                 <div className='flex items-center justify-center h-screen w-full flex-col -mt-10'>
                     <h1 className='Ky text-2xl mb-4'>Ops... Parece que você não tem perfil</h1>
-                    <div className='w-full h-64 max-w-lg flex bg-white rounded-tl-3xl rounded-br-3xl
+                    <div className='ww-full h-64 max-w-lg flex bg-white rounded-tl-3xl rounded-br-3xl
                     md:gap-8'>
                         {/* Photo NoLogged */}
                         <div className='w-60 h-full rounded-tl-3xl'>
