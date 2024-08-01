@@ -1,7 +1,10 @@
+// Development
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
+// Criptography password
 import CryptoJS from 'crypto-js';
 
+// Image Ex
 import imgUser from '../../assets/imagens/Mockup Camisa Preta.png';
 
 // Definindo o tipo do usuário
@@ -14,6 +17,19 @@ interface User {
     cpf: string;
     status: string;
     photoUser: string;
+    purchase: Purchase[];
+}
+
+interface Purchase {
+    _id: string;
+    userId: string;
+    clothingId: string;
+    nameUser: string;
+    nameClothing: string;
+    quantity: string;
+    price: number;
+    statusPurchase: boolean;
+    date: string;
 }
 
 // Definindo o tipo do contexto de usuário
@@ -36,6 +52,19 @@ const fakeUser: User = {
     cpf: '123.456.789-10',
     status: 'active',
     photoUser: imgUser,
+    purchase: [
+        {
+            _id: 'taasfdasf',
+            userId: '1',
+            clothingId: 'gasdasd',
+            nameUser: 'johndoe',
+            nameClothing: 'Camisa Preta',
+            quantity: '2',
+            price: 139.99,
+            statusPurchase: false,
+            date: '01/08/2024'
+        }
+    ]
 };
 
 // Tipando o UserProvider props
