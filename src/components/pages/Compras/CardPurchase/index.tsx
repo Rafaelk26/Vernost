@@ -27,7 +27,9 @@ export function Card() {
 
     return(
         <>
-            <div className="w-64 h-[350px] bg-white">
+            <div 
+            key={'15152'}
+            className="w-64 h-[350px] bg-white">
                 {/* Image Sacola */}
                 <div className="w-full h-60 rounded-bl-3xl">
                     <img 
@@ -47,7 +49,7 @@ export function Card() {
 
                         {/* Name User */}
                         <span className='Ky text-black mt-1 text-sm'>
-                            João da Silva
+                            joaosilva.62
                         </span>
                     </div>
 

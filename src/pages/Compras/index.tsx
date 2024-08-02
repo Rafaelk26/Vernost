@@ -7,7 +7,9 @@ import { useUser } from '../../contexts/User'
 
 // Components
 import { Header } from '../../components/Header'
+import { Container } from '../../components/Container'
 import { Card } from '../../components/pages/Compras/CardPurchase'
+import { Footer } from '../../components/Footer'
 
 // Image
 import notLogged from '../../assets/imagens/NoLogged.png'
@@ -85,18 +87,23 @@ export function Compras() {
     return (
         <>
             <Header />
-            <h1>Compras do Usuário {userId}</h1>
-            <div className='w-full mx-auto mt-16 px-8 grid grid-cols-3 justify-items-center gap-4'>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-            </div>
+                <Container>
+                    <div className='w-full mx-auto mt-16 px-8 grid grid-cols-1 justify-items-center gap-4
+                    sm:grid-cols-2
+                    md:grid-cols-2
+                    lg:grid-cols-3'>
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                    </div>
+                </Container>
+            <Footer />
         </>
     );
 }
