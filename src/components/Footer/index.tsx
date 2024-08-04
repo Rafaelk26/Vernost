@@ -4,19 +4,19 @@ export function Footer() {
             <div className="container mx-auto px-4">
                 <div className="flex flex-col md:flex-row justify-between items-center md:items-start">
                     <div className="text-center md:text-left mb-4 md:mb-0">
-                        <a href="#" className="text-xl font-bold mb-4 block Ky">Institucionais</a>
-                        <a href="#" className="text-md mb-2 block Ky">Direitos e Autorizações</a>
+                        <h1 className="text-xl font-bold mb-4 block Ky">Institucionais</h1>
+                        <a href="/direitos" className="text-md mb-2 block Ky">Direitos e Autorizações</a>
                         <a href="#" className="text-md mb-2 block Ky">Email institucional</a>
                     </div>
                     <div className="text-center md:text-left mb-4 md:mb-0">
-                        <a href="#" className="text-xl font-bold mb-4 block Ky">Fale Conosco</a>
+                        <h1 className="text-xl font-bold mb-4 block Ky">Fale Conosco</h1>
                         <a href="#" className="text-md mb-2 block Ky">Whatsapp institucional</a>
                         <a href="#" className="text-md mb-2 block Ky">Instagram</a>
                     </div>
                     <div className="text-center md:text-left">
-                        <a href="#" className="text-xl font-bold mb-4 block Ky">Sugestões</a>
-                        <a href="#" className="text-md mb-2 block Ky">Shop</a>
-                        <a href="#" className="text-md mb-2 block Ky">Categorias</a>
+                        <h1 className="text-xl font-bold mb-4 block Ky">Sugestões</h1>
+                        <a href="/produtos/show/Todos" className="text-md mb-2 block Ky">Shop</a>
+                        <a href="/produtos/categorias" className="text-md mb-2 block Ky">Categorias</a>
                     </div>
                 </div>
                 <div className="mt-6 border-t border-gray-700 pt-4 text-center">

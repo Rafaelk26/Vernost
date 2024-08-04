@@ -83,10 +83,6 @@ export function CartProduct() {
 
             const url = `https://wa.me/${WhatsApp}?text=${encodeURIComponent(message)}`;
 
-
-            // Enviar comunicado ao WhatsApp do vendedor para dizer que alguém se interessou
-            // Por algum produto específico (Fazer em Python)
-
             window.location.href = url;
             return
         }

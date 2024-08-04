@@ -1,5 +1,4 @@
 import { useEffect, useState, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/User';
 import { Link } from 'react-router-dom';
 
@@ -9,14 +8,8 @@ import { Input } from '../../components/Inputs/Login';
 // Image 
 import imageLogin from '../../assets/imagens/Mockup Camisa Preta.png';
 
-interface loginProps {
-    email: string;
-    password: string;
-}
-
 export function Login() {
     const { login } = useUser();
-    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
