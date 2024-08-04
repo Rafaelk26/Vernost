@@ -35,12 +35,21 @@ export function Detail() {
             photoProduct: Clothes,
             nameProduct: 'Social White',
             categoryProduct: 'Social',
-            priceProduct: price,
+            priceProduct: priceDefault,
             sizeProduct: size,
             qtdProduct: parseFloat(qtd) || 1,
         };
         addCart(product);
     };
+
+    // Converter valor em moeda brasileira (local)
+    function formatNumberToMoney(n: number): string {
+
+        const repareMoney = n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        const newFormate = repareMoney.slice(2, repareMoney.length)
+
+        return newFormate
+    }
 
     return (
         <>
@@ -57,7 +66,7 @@ export function Detail() {
                             <h1 className='Ky text-4xl'>Social White</h1>
                             <h4 className='Ky text-xl'>Social</h4>
                         </div>
-                        <h3 className='Ky mt-4 text-4xl text-lime-600'>R$ {qtd < '1' ? priceDefault : price.toFixed(2)}</h3>
+                        <h3 className='Ky mt-4 text-4xl text-lime-600'>R${qtd < '1' ? formatNumberToMoney(priceDefault) : formatNumberToMoney(price)}</h3>
                         <div className='w-full flex flex-col gap-1 items-center mt-2 md:items-start md:mt-0'>
                             <h4>Size</h4>
                             <div className='w-full flex justify-center gap-3 mt-3 md:justify-start md:mt-0 md:gap-2'>

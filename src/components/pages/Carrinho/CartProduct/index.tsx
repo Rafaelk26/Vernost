@@ -8,6 +8,13 @@ import { MdDelete } from "react-icons/md"
 import { useCart } from '../../../../contexts/Cart'
 import { useUser } from '../../../../contexts/User'
 
+// Icons
+import { IoIosLogOut } from "react-icons/io"
+import { FaWpforms } from "react-icons/fa"
+
+// Image Not Found User
+import noLogged from '../../../../assets/imagens/NoLogged.png'
+
 // Definindo a interface para um produto do carrinho adicionado
 interface Product {
     photoProduct: string;
@@ -30,6 +37,9 @@ export function CartProduct() {
     const [ cartArray, setCartArray ] = useState<Product[]>(cart);
     const [ priceActually, setPriceActually ] = useState<string>('')
 
+    // Variável de aitividade de usuário
+    const [ userLogged, setUserLogged ] = useState<boolean>()
+
     // Preço do total das compras do carrinho
     let total = 0;
 
@@ -48,15 +58,14 @@ export function CartProduct() {
 
     // Atualiza preço do sub-total
     useEffect(() => {
-        const prices = document.getElementsByClassName('price-product');
-        for (let i = 0; i < prices.length; i++) {
-            const priceElement = prices[i] as HTMLElement;
-            const price = parseFloat(priceElement.innerText.replace('R$ ', ''));
-            if (!isNaN(price)) {
-                total += price;
-            }
-        }
-        setPriceActually(total.toFixed(2));
+        let total = 0;
+        cartArray.forEach(p => {
+            total += p.priceProduct * p.qtdProduct;
+        });
+
+        let price = formatNumberToMoney(total)
+
+        setPriceActually(price);
     }, [cartArray]);
 
     // Para enviar a tabela de minhas compras
@@ -66,20 +75,33 @@ export function CartProduct() {
         if(user){
             // Se existir usuário na sessão logado
             const data = cartArray;
-            const totalPrice = data.reduce((acc, p) => acc + (p.priceProduct / p.qtdProduct) * p.qtdProduct, 0);
+            const totalPrice = data.reduce((acc, p) => acc + p.priceProduct * p.qtdProduct, 0);
 
             const message = `Olá, gostaria de comprar os seguintes produtos:\n\n${data.map(p => (
-                `*Camisa*: ${p.nameProduct}\n*Quantidade*: ${p.qtdProduct}\n*Preço*: R$ ${p.priceProduct.toFixed(2)}\n`
-            )).join('\n')}\n\n*Preço Total*: R$ ${totalPrice.toFixed(2)}`;
+                `*Camisa*: ${p.nameProduct}\n*Quantidade*: ${p.qtdProduct}\n*Tamanho*: ${p.sizeProduct}\n*Preço*: R$ ${p.priceProduct.toFixed(2)}\n-------------------------------------`
+            )).join('\n')}\n\n*Preço Total*: R$ ${formatNumberToMoney(totalPrice)}\nVernost Original`;
 
             const url = `https://wa.me/${WhatsApp}?text=${encodeURIComponent(message)}`;
 
+
+            // Enviar comunicado ao WhatsApp do vendedor para dizer que alguém se interessou
+            // Por algum produto específico (Fazer em Python)
+
             window.location.href = url;
+            return
         }
         // Para usuário não logado
-        console.log('USER NÃO LOGADO');
+        setUserLogged(true);
     }
 
+    // Converter valor em moeda brasileira (local)
+    function formatNumberToMoney(n: number): string {
+
+        const repareMoney = n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        const newFormate = repareMoney.slice(2, repareMoney.length)
+
+        return newFormate
+    }
 
     return(
         <>
@@ -91,14 +113,14 @@ export function CartProduct() {
                     </div>
 
                     <div className='w-full mt-10 flex flex-col justify-between gap-6
-                sm:flex-col sm:gap-6
-                md:flex-row md:mb-0 md:gap-2'>
+                    sm:flex-col sm:gap-6
+                    md:flex-row md:mb-0 md:gap-2'>
                         {cartArray.length > 0 ? (
                             <table className='w-full h-96 md:max-w-2xl outline outline-2 outline-white rounded-xl'>
                                 <div className='w-full my-4 ms-4 p-4'>
                                     <h1 className='Ky text-3xl'>Produtos</h1>
                                 </div>
-                                <tbody className='w-full me-2 flex flex-col gap-4 pb-8'>
+                                <tbody className='w-full me-2 flex flex-col gap-4 pb-8 h-96 mb-6 overflow-auto'>
                                     {cartArray.map(p => (
                                         <tr 
                                         key={'asdsad'}
@@ -121,7 +143,7 @@ export function CartProduct() {
                                             </td>
                                             {/* Price */}
                                             <td>
-                                                <p className='Ky'>R$ <span className='price-product'>{p.priceProduct.toFixed(2)}</span></p>
+                                                <p className='Ky'>R$ <span className='price-product'>{formatNumberToMoney(p.priceProduct)}</span></p>
                                             </td>
                                             {/* Size */}
                                             <td>
@@ -183,7 +205,7 @@ export function CartProduct() {
                                     <h4 className='Ky ps-6 pe-6 pt-6 text-xl'>Sub-total</h4>
                                     <div className='w-full flex justify-between items-center px-6'>
                                         <h1 className='Ky mt-6 text-2xl text-gray-500'>R$</h1>
-                                        <span className='Ky mt-4 text-4xl text-gray-500'>0.00</span>
+                                        <span className='Ky mt-4 text-4xl text-gray-500'>{formatNumberToMoney(0.00)}</span>
                                     </div>
                                 </div>
                                 <button
@@ -195,6 +217,53 @@ export function CartProduct() {
                         </>}
                     </div>
                 </form>
+
+                {userLogged ? (
+                    <>
+                        <div className='w-72 h-max bg-white absolute z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg'>
+                            {/* Image */}
+                            <div className='w-full h-48'>
+                                <img
+                                    className='w-full h-full object-cover rounded-tl-lg rounded-tr-lg'
+                                    src={noLogged}
+                                    alt="Not Found User" />
+                            </div>
+
+                            <h1 className='Ky text-black text-center text-2xl mt-2'>Acessar</h1>
+
+                            {/* Buttons */}
+                            <div className='flex flex-col items-center pb-8 mt-2'>
+                                <a href={'/login'}>
+                                    <button className='w-44 bg-red-600 text-white
+                                    text-xl flex items-center justify-center Ky mt-1 py-1 px-4
+                                    gap-4 rounded-[4px]'>
+                                        <IoIosLogOut
+                                            size={24}
+                                            fill='#fff'
+                                        />
+                                        Login
+                                    </button>
+                                </a>
+
+                                {/* Botão Cadastro */}
+                                <a href={'/cadastro'}>
+                                    <button className='w-44 bg-blue-950 text-white
+                                    text-xl flex items-center justify-center Ky mt-1 py-1 px-4
+                                    gap-4 rounded-[4px]'>
+                                        <FaWpforms
+                                            size={20}
+                                            fill='#fff'
+                                        />
+                                        Cadastro
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    
+                    </>
+                ) : (
+                    <></>
+                )}
             </section>
         </>
     )

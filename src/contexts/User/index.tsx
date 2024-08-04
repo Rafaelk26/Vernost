@@ -72,7 +72,7 @@ interface UserProviderProps {
     children: ReactNode;
 }
 
-const SECRET_KEY = 'my-key-vernost-app';
+const SECRET_KEY = 'my-k#y-v#rn@5t-4pp';
 
 export const UserProvider = ({ children }: UserProviderProps) => {
     const [user, setUser] = useState<Partial<User> | null>(null);
@@ -98,14 +98,23 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             setUser(loggedInUser);
             const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(loggedInUser), SECRET_KEY).toString();
             sessionStorage.setItem('user', encryptedUser);
+            
+            // Envia o User para o home '/'
+            window.location.href = '/'
         } else {
             alert('Credenciais inválidas!');
+
+            // Mantem o User no login '/login'
+            window.location.href = '/login';
         }
     };
 
     const logout = () => {
+        window.location.href = '/';
+        
         setUser(null);
         sessionStorage.removeItem('user');
+        
     };
 
     return (

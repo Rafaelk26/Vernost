@@ -37,7 +37,6 @@ export function Login() {
         }
 
         login(email, password);
-        navigate('/');
     };
 
     useEffect(() => {
