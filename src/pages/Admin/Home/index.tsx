@@ -1,8 +1,15 @@
+// Components
+import { Header } from '../../../components/Header/Header-Admin'
+import { Container } from '../../../components/Container'
+import { Content } from '../../../components/pages/Admin/Home/Content'
+
 export function Admin(){
     return(
         <>
-        
-            <h1 className="bold">PAGE HOME ADMIN</h1>
+            <Header />
+            <Container>
+                <Content />
+            </Container>
         
         </>
     )

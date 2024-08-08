@@ -94,7 +94,7 @@ export function Login() {
                                 className='w-52 bg-white text-black Ky p-1 rounded-md 
                             flex items-center justify-center text-lg transition-all
                             hover:bg-black hover:outline hover:ouline-2 hover:outline-white
-                            hover:text-white'>Enviar</button>
+                            hover:text-white'>Entrar</button>
 
                             <Link to={'/login/check/'}
                                 className='mt-2'>
