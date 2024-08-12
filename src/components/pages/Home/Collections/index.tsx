@@ -3,7 +3,8 @@ import { ClothingItem } from '../../../Clothes';
 export function Collection() {
     return (
         <>
-            <div className="w-full p-2 flex flex-col justify-center mt-2 items-center">
+            <div className="w-full p-2 mt-2 mx-auto 
+            md:max-w-4xl">
                 <div className="text-center">
                     <h1 className="text-4xl Ky">Coleções</h1>
                     <p className="text-xl Ky text-center mt-1 text-gray-500">Alguns Usados</p>
@@ -14,7 +15,7 @@ export function Collection() {
                 md:max-w-6xl md:mt-12">
                     <div className="w-full flex justify-center items-center flex-col gap-16 
                     sm:grid-cols-2 sm:grid sm:gap-x-2 sm:justify-items-center
-                    md:flex-row md:grid md:gap-8 md:grid-cols-3">
+                    md:flex-row md:grid md:grid-cols-3 md:gap-x-16">
                         <ClothingItem />
                         <ClothingItem />
                         <ClothingItem />
