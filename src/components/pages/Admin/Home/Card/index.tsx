@@ -21,7 +21,7 @@ export function Cards() {
                 sm:grid-cols-2
                 md:grid-cols-4">
                     {/* Card 1 */}
-                    <Link to={'/admin'} className='w-full max-w-64'>
+                    <Link to={'/admin/estoque'} className='w-full max-w-64'>
                         <div className="h-28 ps-2 pe-4 pb-[6px] flex justify-between items-end bg-zinc-700 rounded-md border-2 border-white transition-all
                         hover:scale-105 hover:cursor-pointer">                        
                             <h1 className='Ky text-2xl'>Estoque</h1>
@@ -33,7 +33,7 @@ export function Cards() {
                         </div>
                     </Link>
 
-                    <Link to={'/admin'} className='w-full max-w-64'>
+                    <Link to={'/admin/user/johndoe.admin'} className='w-full max-w-64'>
                         <div className="h-28 ps-2 pe-4 pb-[6px] flex justify-between items-end bg-zinc-700 rounded-md border-2 border-white transition-all
                         hover:scale-105 hover:cursor-pointer">
 
@@ -46,7 +46,7 @@ export function Cards() {
                         </div>
                     </Link>
 
-                    <Link to={'/admin'} className='w-full max-w-64'>
+                    <Link to={'/admin/roupas'} className='w-full max-w-64'>
                         <div className="h-28 ps-2 pe-4 pb-[6px] flex justify-between items-end bg-zinc-700 rounded-md border-2 border-white transition-all
                         hover:scale-105 hover:cursor-pointer">
 
@@ -59,7 +59,7 @@ export function Cards() {
                         </div>
                     </Link>
 
-                    <Link to={'/admin'} className='w-full max-w-64'>
+                    <Link to={'/admin/caixa'} className='w-full max-w-64'>
                         <div className="h-28 ps-2 pe-4 pb-[6px] flex justify-between items-end bg-zinc-700 rounded-md border-2 border-white transition-all
                         hover:scale-105 hover:cursor-pointer">
 
@@ -78,7 +78,7 @@ export function Cards() {
             <div className="w-full mt-3 grid grid-cols-1 justify-items-center gap-4
             sm:grid-cols-2
             md:grid-cols-4">
-                <Link to={'/admin'} className='w-full max-w-64'>
+                <Link to={'/admin/produto/criar'} className='w-full max-w-64'>
                     {/* Cadastrar */}
                     <div>
                         <h1 className="Ky text-2xl text-blue-800">Cadastrar</h1>
@@ -96,7 +96,7 @@ export function Cards() {
                     </div>
                 </Link>
 
-                <Link to={'/admin'} className='w-full max-w-64'>
+                <Link to={'/admin/gerenciar'} className='w-full max-w-64'>
                     {/* Alterar */}
                     <div>
                         <h1 className="Ky text-2xl text-yellow-600">Alterar</h1>
@@ -113,7 +113,7 @@ export function Cards() {
                     </div>
                 </Link>   
                 
-                <Link to={'/admin'} className='w-full max-w-64 flex flex-col justify-end '>
+                <Link to={'/admin/produto/editar'} className='w-full max-w-64 flex flex-col justify-end '>
                     <div>
                         <div className="w-full max-w-64 h-28 ps-2 pe-4 pb-[6px] flex justify-between items-end bg-yellow-600 rounded-md border-2 border-white transition-all
                         hover:scale-105 hover:cursor-pointer">
@@ -128,7 +128,7 @@ export function Cards() {
                     </div>
                 </Link>  
 
-                <Link to={'/admin'} className='w-full max-w-64'>
+                <Link to={'/admin/produto/deletar'} className='w-full max-w-64'>
                     {/* Deletar */}
                     <div>
                         <h1 className="Ky text-2xl text-red-800">Deletar</h1>

@@ -19,6 +19,7 @@ import { Sobre } from './pages/Sobre';
 import { Admin } from './pages/Admin/Home';
 import { Caixa } from './pages/Admin/Caixa';
 import { Estoque } from './pages/Admin/Estoque';
+import { Roupas } from './pages/Admin/Roupas';
 import { Gerenciar } from './pages/Admin/GerenciarCompras';
 import { Criar } from './pages/Admin/Produtos/Criar';
 import { Deletar } from './pages/Admin/Produtos/Deletar';
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
     {
         element: <Private><Estoque /></Private>,
         path: "/admin/estoque"
+    },
+    {
+        element: <Private><Roupas /></Private>,
+        path: "/admin/roupas"
     },
     {
         element: <Private><Gerenciar /></Private>,
