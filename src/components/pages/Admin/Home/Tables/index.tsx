@@ -61,33 +61,48 @@ export function Tables() {
                         <table className="w-full h-96 max-h-96 outline outline-2 outline-white rounded-lg overflow-x-auto">
                             {purchases.length > 0 ? (
                                 <>
-                                    <thead className="w-full sticky top-0 bg-black flex flex-row justify-between items-center py-5 px-8 flex-shrink overflow-x-auto
-                                    md:w-auto">
-                                        <tr className="w-full flex justify-start items-center md:w-auto">
+                                    <thead className="min-w-[600px] sticky top-0 bg-black flex flex-row justify-between items-center py-5 px-8 overflow-x-auto 
+                                    sm:min-w-full
+                                    md:min-w-full">
+                                        <tr className="min-w-[200px] flex justify-start items-center 
+                                        sm:w-auto
+                                        md:w-auto">
                                             <th className='Ky text-xl pt-1'>Compra</th>
                                         </tr>
-                                        <tr className="w-full flex justify-center items-center md:w-auto">
+                                        <tr className="min-w-[200px] flex justify-center items-center 
+                                        sm:w-auto
+                                        md:w-auto">
                                             <th className='Ky text-xl pt-1'>ID Compra</th>
                                         </tr>
-                                        <tr className="w-full flex justify-end items-center md:w-auto">
+                                        <tr className="min-w-[200px] flex justify-end items-center 
+                                        sm:w-auto
+                                        md:w-auto">
                                             <th className='Ky text-xl pt-1'>Preço</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="w-full flex flex-col gap-3 px-4 pb-4 overflow-y-auto">
+                                    <tbody className="min-w-[600px] flex flex-col gap-3 px-4 pb-4 overflow-y-auto overflow-x-auto 
+                                    sm:min-w-full
+                                    md:min-w-full">
                                         {purchases.map((purchase, index) => (
-                                            <tr key={index} className="w-full flex flex-row justify-between items-center px-8 py-3 bg-gray-500 bg-opacity-10 rounded-lg border border-white md:w-auto">
-                                                <td className='w-full flex justify-start md:w-auto'>
+                                            <tr key={index} className="min-w-[600px] flex flex-row justify-between items-center px-8 py-3 bg-gray-500 bg-opacity-10 rounded-lg border border-white 
+                                            sm:w-auto
+                                            md:w-auto">
+                                                <td className='min-w-[200px] flex justify-start 
+                                                sm:w-auto
+                                                md:w-auto'>
                                                     <img
                                                         className="w-10 h-10 object-cover rounded-sm"
                                                         src={imgBuy}
                                                         alt="Compra efetuada" />
                                                 </td>
-
-                                                <td className='w-full flex justify-center md:w-auto'>
+                                                <td className='min-w-[200px] flex justify-center 
+                                                sm:w-auto
+                                                md:w-auto'>
                                                     <span className='Ky text-xl'>{purchase.id_Compra}</span>
                                                 </td>
-
-                                                <td className='w-full flex justify-end md:w-auto'>
+                                                <td className='min-w-[200px] flex justify-end 
+                                                sm:w-auto
+                                                md:w-auto'>
                                                     <span className='Ky text-xl'>{convertNumberToMoney(purchase.price)}</span>
                                                 </td>
                                             </tr>
