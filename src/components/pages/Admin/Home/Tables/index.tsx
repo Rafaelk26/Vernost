@@ -7,6 +7,7 @@ interface buyProps{
 }
 
 interface stockProps{
+    id: string;
     photo: string;
     name: string;
     qtd: string;
@@ -39,6 +40,7 @@ export function Tables() {
 
     const products: stockProps[] = [
         {
+            id: '#Dsfg42332',
             photo: `${imgBuy}`,
             name: 'Clothes White',
             qtd: "14"
@@ -80,11 +82,12 @@ export function Tables() {
                                             <th className='Ky text-xl pt-1'>Preço</th>
                                         </tr>
                                     </thead>
+                                    
                                     <tbody className="min-w-[600px] flex flex-col gap-3 px-4 pb-4 overflow-y-auto overflow-x-auto 
                                     sm:min-w-full
                                     md:min-w-full">
-                                        {purchases.map((purchase, index) => (
-                                            <tr key={index} className="min-w-[600px] flex flex-row justify-between items-center px-8 py-3 bg-gray-500 bg-opacity-10 rounded-lg border border-white 
+                                        {purchases.map((purchase) => (
+                                            <tr key={purchase.id_Compra} className="min-w-[600px] flex flex-row justify-between items-center px-8 py-3 bg-gray-500 bg-opacity-10 rounded-lg border border-white 
                                             sm:w-auto
                                             md:w-auto">
                                                 <td className='min-w-[200px] flex justify-start 
@@ -109,56 +112,50 @@ export function Tables() {
                                         ))}
                                     </tbody>
                                 </>
-                            ) : 
-                            <>
+                            ) : (
                                 <tbody className="w-full h-96 flex justify-center items-center">
-                                    <span className='Ky text-lg text-center'>Não há compras efetuadas no momento</span>
+                                    <tr>
+                                        <td className='Ky text-lg text-center'>Não há compras efetuadas no momento</td>
+                                    </tr>
                                 </tbody>
-                            </>}
+                            )}
                         </table>
                     </div>
                     
                 </div>
 
-                <div className="w-full h-96 mt-12 mb-20
-                md:w-1/4 md:mt-0 md:mb-0">
+                <div className="w-full h-96 mt-12 mb-20 md:w-1/4 md:mt-0 md:mb-0">
                     <h1 className="w-full Ky text-2xl mb-1">Estoque</h1>
                     <aside className="w-full h-96 outline outline-2 outline-white rounded-lg overflow-y-auto">
                         <table className='w-full mt-1'>
                             {products.length > 0 ? (
-                                products.map((p, index) => (
-                                    <>
-                                        <>
-                                            <tbody className='w-full mt-2'>
-                                                <td key={index} className='w-full px-4 mt-4 flex justify-between items-center gap-3'>
-                                                    <tr className='w-1/6'>
-                                                        <img
-                                                            className='w-8 h-8 object-cover rounded-sm'
-                                                            src={p.photo}
-                                                            alt="" />
-                                                    </tr>
-                                                    <tr className='w-2/3 flex justify-center'>
-                                                        <span className='Ky text-md 
-                                                        md:text-sm 
-                                                        lg:text-md'>{p.name}</span>
-                                                    </tr>
-                                                    <tr className='w-1/6 flex justify-end'>
-                                                        <span className='Ky text-lg'>{p.qtd}</span>
-                                                    </tr>
-                                                </td>
-                                            </tbody>
-                                        </>
-                                    </>
+                                products.map((p) => (
+                                    <tbody key={p.id} className='w-full mt-2'>
+                                        <tr className='w-full px-4 mt-4 flex justify-between items-center gap-3'>
+                                            <td className='w-1/6'>
+                                                <img
+                                                    className='w-8 h-8 object-cover rounded-sm'
+                                                    src={p.photo}
+                                                    alt={p.name} />
+                                            </td>
+                                            <td className='w-2/3 flex justify-center'>
+                                                <span className='Ky text-md md:text-sm lg:text-md'>{p.name}</span>
+                                            </td>
+                                            <td className='w-1/6 flex justify-end'>
+                                                <span className='Ky text-lg'>{p.qtd}</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 ))
-                            ):
-                            <>
+                            ) : (
                                 <tbody className='w-full mt-2 h-80 flex justify-center items-center'>
-                                    <span className='Ky text-sm text-center mt-10'>
-                                        Não há compras efetuadas <br />
-                                        no momento
-                                    </span>
+                                    <tr>
+                                        <td className='Ky text-sm text-center mt-10'>
+                                            Não há produtos em estoque no momento
+                                        </td>
+                                    </tr>
                                 </tbody>
-                            </>}
+                            )}
                         </table>
                     </aside>
                 </div>
