@@ -1,6 +1,14 @@
-import { FormEvent, useState } from 'react';
-import { Header } from '../../../../components/Header/Header-Admin';
-import imgEx from '../../../../assets/imagens/PurchaseImg.png';
+// Develpoment
+import { FormEvent, useState } from 'react'
+import axios from 'axios'
+
+// Components
+import { Header } from '../../../../components/Header/Header-Admin'
+
+// Icons
+import { FaFileImage } from "react-icons/fa"
+import { FaRegTrashAlt } from "react-icons/fa"
+
 
 export function Criar() {
     const [selectedColor, setSelectedColor] = useState('');
@@ -26,35 +34,53 @@ export function Criar() {
     };
 
     const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // Se existir arquivo exibe o primeiro, caso não tenha retorna null
         const file = e.target.files ? e.target.files[0] : null;
+        // Armazena no estado
         setPhotoProduto(file);
 
+        // Se o arquivo existir
         if (file) {
+            // Faz uma nova leitura do arquivo
             const reader = new FileReader();
+            // Finaliza a leitura e armazena em photoPreview o seu resultado
             reader.onloadend = () => {
                 setPhotoPreview(reader.result as string);
             };
+            // Armazena os dados do arquivo em uma url
             reader.readAsDataURL(file);
         } else {
             setPhotoPreview(null);
         }
     };
 
-    const handleSendClothes = (e: FormEvent) => {
+    const handleDeletePhotoChange = () => {
+        if(photoPreview) {
+            setPhotoPreview(null);
+            setPhotoProduto(null);
+        }
+    }
+
+    const handleSendClothes = async (e: FormEvent) => {
         e.preventDefault();
 
         const product = {
-            nomeProduto,
-            categoriaProduto,
-            precoProduto,
-            qtdProduto,
-            descricaoProduto,
-            selectedColor,
-            selectedSizes,
-            photoProduto,
+            name: nomeProduto,
+            description: descricaoProduto,
+            color: selectedColor,
+            size: selectedSizes.join(', '), 
+            category: categoriaProduto,
+            photoClothing: photoProduto ? URL.createObjectURL(photoProduto) : '', 
+            price: parseFloat(precoProduto),
+            quantity: parseInt(qtdProduto, 10)
         };
 
-        console.log('Produto enviado:', product);
+        try {
+            const response = await axios.post('http://localhost:8888/administrador', product);
+            console.log('Resposta do servidor:', response.data);
+        } catch (err) {
+            console.error('Erro', err);
+        }
     };
 
     return (
@@ -65,19 +91,37 @@ export function Criar() {
                 <form onSubmit={handleSendClothes}>
                     <div className='w-full mt-6 h-96 flex'>
                         <div className="w-1/2">
-                            <div className='w-80 h-96 relative'>
-                                <input
-                                    className='w-80 h-96 absolute z-10 top-0 opacity-0 cursor-pointer'
-                                    type="file"
-                                    name='photoProduto'
-                                    alt=""
-                                    onChange={handlePhotoChange}
-                                />
+                            <div className='w-80 h-96 relative flex justify-center items-center border border-input rounded-md'>
+                                {!photoPreview && (
+                                    <>
+                                        <input
+                                        className='w-80 h-96 absolute z-10 top-0 opacity-0 cursor-pointer'
+                                        type="file"
+                                        name='photoProduto'
+                                        onChange={handlePhotoChange}
+                                        />
+                                        
+                                        <FaFileImage 
+                                        className='absolute cursor-pointer'
+                                        size={40} 
+                                        fill='#fff' />
+                                    </>
+                                )}
 
+                                {photoPreview && (
+                                    <>
+                                        <FaRegTrashAlt 
+                                        onClick={handleDeletePhotoChange}
+                                        className='absolute z-10 cursor-pointer'
+                                        size={40}
+                                        fill='#fff'
+                                        />
+                                    </>
+                                )}
+                                
                                 <img
-                                    className='w-full h-full object-cover rounded-md'
-                                    src={photoPreview || imgEx}
-                                    alt="Product"
+                                    className={`w-full h-full object-cover rounded-md ${photoPreview ? `opacity-50` : `opacity-0`}`}
+                                    src={photoPreview || ''}
                                 />
                             </div>
                         </div>
