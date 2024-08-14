@@ -1,54 +1,105 @@
-// Detail.js
+// Development
 import { useEffect, useState } from 'react';
-import { useCart } from '../../../../../contexts/Cart/'
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+
+// Context
+import { useCart } from '../../../../../contexts/Cart/';
+
+// Interface
+import { clothingProps } from '../../../../Clothes';
 
 // Imagem 
 import Clothes from '../../../../../assets/imagens/Mockup Camisa Preta.png';
 import Cart from '../../../../../assets/Icons/Carrinho.png';
 
 export function Detail() {
-    const { addCart } = useCart(); 
+    const { addCart } = useCart();
+    const { idParam } = useParams();
 
-    const [priceDefault, setPriceDefault] = useState<number>(69.99);
-    const [price, setPrice] = useState<number>(69.99);
-    const [qtd, setQtd] = useState<string>('');
-    const [size, setSize] = useState<string>('P');
-    const [color, setColor] = useState<string>('');
+    // Armazena os dados
+    const [data, setData] = useState<clothingProps | null>(null);
 
-    useEffect(()=> {
-        setColor('blue')
-    }, [])
+    // Valores na página
+    const [priceDefault, setPriceDefault] = useState<number>();
+    const [priceEl, setPriceEl] = useState<number>();
+    const [qtd, setQtd] = useState<string>('1');
+    const [sizeEl, setSizeEl] = useState<string>('P');
+    const [detailEl, setDetail] = useState<string>('');
+    const [colorEl, setColorEl] = useState<string>('');
+    const [qtdArray, setQtdArray] = useState<string[]>([]);
 
     useEffect(() => {
-        setPriceDefault(priceDefault);
+        const connectWithDatabase = async () => {
+            if (idParam !== undefined) {
+                try {
+                    const response = await axios.get(`http://localhost:8888/roupas/get?id=${idParam}`);
+                    const clothingData = response.data.clothing;
+                    setData(clothingData);
 
+                    // Atualizando os valores
+                    setPriceDefault(clothingData.price);
+                    setSizeEl(clothingData?.size);
+                    setDetail(clothingData.detail)
+                    setColorEl(clothingData.color);
+                    setQtdArray(convertForArray(clothingData.size));
+                } catch (e) {
+                    console.error('Não foi possível resgatar os dados:', e);
+                }
+            }
+        };
+
+        connectWithDatabase();
+    }, [idParam]);
+
+    useEffect(() => {
         const qtdNumber = parseFloat(qtd);
 
-        if (!isNaN(qtdNumber)) {
-            const result = 69.99 * qtdNumber;
-            setPrice(result);
+        if (!isNaN(qtdNumber) && priceDefault) {
+            const result = priceDefault * qtdNumber;
+            setPriceEl(result);
         }
-    }, [qtd]);
+    }, [qtd, priceDefault]);
 
     const handleAddToCart = () => {
-        const product = {
-            photoProduct: Clothes,
-            nameProduct: 'Social White',
-            categoryProduct: 'Social',
-            priceProduct: priceDefault,
-            sizeProduct: size,
-            qtdProduct: parseFloat(qtd) || 1,
-        };
-        addCart(product);
+        // Verifica se o usuário clicou em algum botão de tamanho
+        const isSizeSelected = qtdArray.includes(sizeEl);
+
+        if (!isSizeSelected) {
+            alert("Por favor, selecione um tamanho antes de adicionar ao carrinho.");
+            return;
+        }
+
+        if (data) {
+            const product = {
+                photoProduct: Clothes,
+                nameProduct: data.name,
+                categoryProduct: data.category,
+                priceProduct: priceDefault ? priceDefault : 0,
+                sizeProduct: sizeEl,
+                qtdProduct: parseFloat(qtd) || 1,
+            };
+            addCart(product);
+        }
     };
 
-    // Converter valor em moeda brasileira (local)
-    function formatNumberToMoney(n: number): string {
+    function convertForArray(text: string): string[] {
+        return text.split(',').map(item => item.trim());
+    }
+
+    function formatNumberToMoney(n: number | undefined): string {
+        if (n === undefined || isNaN(n)) {
+            return '0,00';
+        }
 
         const repareMoney = n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        const newFormate = repareMoney.slice(2, repareMoney.length)
+        const newFormate = repareMoney.slice(2, repareMoney.length);
 
-        return newFormate
+        return newFormate;
+    }
+
+    if (!data) {
+        return <p>Loading...</p>;
     }
 
     return (
@@ -58,23 +109,23 @@ export function Detail() {
                     <div className='md:w-1/2 flex justify-end'>
                         <img
                             className="w-96 h-80 object-cover"
-                            src={Clothes}
-                            alt="Clothes" />
+                            src={data.photoClothing}
+                            alt={data.name} />
                     </div>
                     <div className='w-96 flex flex-col items-center md:w-1/2 md:items-start'>
                         <div className='w-full flex flex-col items-center mt-4 md:items-start md:mt-0'>
-                            <h1 className='Ky text-4xl'>Social White</h1>
-                            <h4 className='Ky text-xl'>Social</h4>
+                            <h1 className='Ky text-4xl'>{data.name}</h1>
+                            <h4 className='Ky text-xl'>{data.category}</h4>
                         </div>
-                        <h3 className='Ky mt-4 text-4xl text-lime-600'>R${qtd < '1' ? formatNumberToMoney(priceDefault) : formatNumberToMoney(price)}</h3>
+                        <h3 className='Ky mt-4 text-4xl text-lime-600'>R${qtd < '1' ? formatNumberToMoney(priceDefault) : formatNumberToMoney(priceEl)}</h3>
                         <div className='w-full flex flex-col gap-1 items-center mt-2 md:items-start md:mt-0'>
                             <h4>Size</h4>
                             <div className='w-full flex justify-center gap-3 mt-3 md:justify-start md:mt-0 md:gap-2'>
-                                {['P', 'M', 'G', 'GG'].map((s) => (
+                                {qtdArray.map((s) => (
                                     <button
                                         key={s}
-                                        className={`w-max h-7 border-2 flex justify-center items-center border-black rounded transition-colors ${size === s ? 'bg-slate-600' : 'bg-white'}`}
-                                        onClick={() => setSize(s)}
+                                        className={`w-max h-7 border-2 flex justify-center items-center border-black rounded transition-colors ${sizeEl === s ? 'bg-slate-600' : 'bg-white'}`}
+                                        onClick={() => setSizeEl(s)}
                                     >
                                         <p className='text-black Ky p-1 mt-1 text-2xl'>{s}</p>
                                     </button>
@@ -95,7 +146,7 @@ export function Detail() {
 
                         {/* Colors clothes */}
                         <div className='w-full flex gap-4 mt-6 justify-center md:justify-start md:gap-2'>
-                            <div className={`w-6 h-6 outline outline-2 outline-white bg-${color}-500 rounded-full`}></div>
+                            <div className={`w-6 h-6 outline outline-2 outline-white bg-${colorEl}-500 rounded-full`}></div>
                         </div>
                         <div className='w-full mt-6 flex justify-center md:justify-start md:mt-4'>
                             <button
@@ -112,11 +163,7 @@ export function Detail() {
                     </div>
                 </div>
                 <div className='w-full max-w-2xl mt-6 mb-4 mx-auto text-center md:max-w-full md:text-start md:mt-4'>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius dolores nihil repudiandae unde maxime est doloribus, saepe quam, adipisci architecto at dicta mollitia. A eum reprehenderit error consectetur iure aliquid!
-                        Rem odio mollitia, necessitatibus debitis possimus, dolor dolorem magni a labore quia nam iure culpa quaerat, accusamus impedit dicta libero laborum assumenda! Perspiciatis esse ipsum natus veritatis culpa id temporibus.
-                        Animi maiores, cumque in alias cupiditate incidunt eaque ipsum expedita. Neque veniam aut, iusto quas quia molestias nulla commodi at rerum laboriosam cupiditate modi quisquam voluptate voluptatem quae amet incidunt.
-                        Numquam accusamus fugiat praesentium unde cum? Harum non repudiandae officia soluta mollitia ratione doloremque officiis suscipit dignissimos rerum perspiciatis pariatur molestiae quam, corrupti provident beatae dolores quidem nostrum impedit aut.
-                        Quos nostrum odio expedita velit accusantium dicta accusamus, architecto aut, cumque sit voluptatibus sequi blanditiis. Provident sit, at magni fugit doloremque dolorem placeat sed earum exercitationem quaerat! Quidem, omnis odit?</p>
+                    <p>{detailEl}</p>
                 </div>
             </section>
         </>

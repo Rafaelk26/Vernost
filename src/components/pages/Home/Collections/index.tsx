@@ -1,6 +1,33 @@
-import { ClothingItem } from '../../../Clothes';
+// Development
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
+// Components && Interfaces
+import { ClothingItem } from '../../../Clothes'
+import { clothingProps } from '../../../Clothes'
+
 
 export function Collection() {
+
+    const [data, setData] = useState<clothingProps[]>([])
+    
+    useEffect(()=> {
+        const connectWithDatabase = async () => {
+            try{
+                const response = await axios.get('http://localhost:8888/roupas');
+                setData(response.data);
+            } catch(e) {
+                console.error('Não foi possível resgatar os dados:', e);
+            }
+        }
+
+        connectWithDatabase()
+
+        return () => {
+            connectWithDatabase()
+        }
+    }, [])
+
     return (
         <>
             <div className="w-full p-2 mt-2 mx-auto 
@@ -16,15 +43,18 @@ export function Collection() {
                     <div className="w-full flex justify-center items-center flex-col gap-16 
                     sm:grid-cols-2 sm:grid sm:gap-x-2 sm:justify-items-center
                     md:flex-row md:grid md:grid-cols-3 md:gap-x-16">
-                        <ClothingItem />
-                        <ClothingItem />
-                        <ClothingItem />
-                        <ClothingItem />
-                        <ClothingItem />
-                        <ClothingItem />
-                        <ClothingItem />
-                        <ClothingItem />
-                        <ClothingItem />
+                        {data.map(card => 
+                            <>
+                                <ClothingItem
+                                key={card.id}
+                                id={card.id}
+                                name={card.name}
+                                category={card.category}
+                                photoClothing={card.photoClothing}
+                                price={card.price}
+                                color={card.color} />
+                            </>   
+                        )}
                     </div>
                 </div>
             </div>

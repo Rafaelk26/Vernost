@@ -1,36 +1,22 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-
-import CryptoJS from 'crypto-js';
-import imgUser from '../../assets/imagens/Mockup Camisa Preta.png';
+// Development
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
+import axios from 'axios'
+import CryptoJS from 'crypto-js'
 
 interface User {
     id: string;
     fullName: string;
     username: string;
     email: string;
-    password: string;
     cpf: string;
-    status: string;
+    status: boolean;
     photoUser: string;
-    purchase: Purchase[];
-    isAdmin?: boolean;
 }
-
-interface Purchase {
-    _id: string;
-    userId: string;
-    clothingId: string;
-    nameUser: string;
-    nameClothing: string;
-    quantity: string;
-    price: number;
-    statusPurchase: boolean;
-    date: string;
-}
+//  isAdmin?: true;
 
 interface UserContextType {
     user: Partial<User> | null;
-    login: (emailOrUsername: string, password: string) => void;
+    login: (email: string, password: string) => void;
     logout: () => void;
 }
 
@@ -39,44 +25,6 @@ interface UserProviderProps {
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
-
-const adminUser: User = {
-    id: '1',
-    fullName: 'Admin John Doe',
-    username: 'adminjohndoe',
-    email: 'admin.johndoe@example.com',
-    password: 'password123',
-    cpf: '123.456.789-10',
-    status: 'active',
-    photoUser: imgUser,
-    purchase: [],
-    isAdmin: true,
-};
-
-const regularUser: User = {
-    id: '2',
-    fullName: 'Jane Doe',
-    username: 'janedoe',
-    email: 'janedoe@example.com',
-    password: 'password123',
-    cpf: '987.654.321-00',
-    status: 'active',
-    photoUser: imgUser,
-    purchase: [
-        {
-            _id: 'abc123',
-            userId: '2',
-            clothingId: 'xyz456',
-            nameUser: 'janedoe',
-            nameClothing: 'Camisa Branca',
-            quantity: '1',
-            price: 99.99,
-            statusPurchase: true,
-            date: '01/08/2024',
-        },
-    ],
-    isAdmin: false,
-};
 
 const SECRET_KEY = 'My-k3Y-V3rn@5T-4pP';
 
@@ -92,27 +40,37 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         }
     }, []);
 
-    const login = (emailOrUsername: string, password: string) => {
-        let loggedInUser: User | null = null;
+    // Contexto de logar
+    const login = async (email: string, password: string) => {
+        try {
+            const response = await axios.post('http://localhost:8888/login', {
+                email,
+                password,
+            });
 
-        if ((emailOrUsername === adminUser.email || emailOrUsername === adminUser.username) && password === adminUser.password) {
-            loggedInUser = adminUser;
-        } else if ((emailOrUsername === regularUser.email || emailOrUsername === regularUser.username) && password === regularUser.password) {
-            loggedInUser = regularUser;
-        }
+            const loggedInUser = response.data.user;
 
-        if (loggedInUser) {
-            const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(loggedInUser), SECRET_KEY).toString();
-            sessionStorage.setItem('user', encryptedUser);
-            setUser(loggedInUser);
+            if (loggedInUser) {
+                const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(loggedInUser), SECRET_KEY).toString();
+                sessionStorage.setItem('user', encryptedUser);
+                setUser(loggedInUser);
 
-            window.location.href = loggedInUser.isAdmin ? '/admin' : '/';
-        } else {
-            alert('Credenciais inválidas!');
-            window.location.href = '/login';
+                window.location.href = '/';
+            } else {
+                alert('Credenciais inválidas!');
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response?.status === 401) {
+                alert('Credenciais inválidas!');
+            } else {
+                console.error('Erro ao tentar logar:', error);
+                alert('Ocorreu um erro ao tentar logar. Tente novamente mais tarde.');
+            }
         }
     };
 
+
+    // Contexto de deslogar
     const logout = () => {
         setUser(null);
         sessionStorage.removeItem('user');
