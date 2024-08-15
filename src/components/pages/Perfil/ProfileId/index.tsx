@@ -1,4 +1,6 @@
-import { FormEvent, useState } from "react";
+// Development
+import { FormEvent, useState } from "react"
+import axios from 'axios'
 
 // Icon
 import { FaUserAlt } from "react-icons/fa"
@@ -7,19 +9,20 @@ import { FaUserAlt } from "react-icons/fa"
 import fotoExample from '../../../../assets/imagens/Mockup Camisa Preta.png'
 
 interface profileProps {
+    id?: string;
     fullName: string;
     email: string;
     userNick: string;
     photoUser: string;
 }
 
-export function ProfileId({ email, fullName, userNick, photoUser }: profileProps) {
+export function ProfileId({ id, email, fullName, userNick, photoUser }: profileProps) {
     const [fullNameState, setFullNameState] = useState<string>(fullName);
     const [emailState, setEmailState] = useState<string>(email);
     const [userState, setUserState] = useState<string>(userNick);
     const [photoUserState, setPhotoUserState] = useState<string>(photoUser);
 
-    const handleSubmit = (event: FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
         const objDataPutProfile = {
@@ -29,16 +32,31 @@ export function ProfileId({ email, fullName, userNick, photoUser }: profileProps
             photoUser: photoUserState
         };
 
-        console.log('Dados enviados ao back-end!');
-        console.table(objDataPutProfile);
+        if (objDataPutProfile.fullName === '' || objDataPutProfile.email === '' || objDataPutProfile.username === '' || objDataPutProfile.photoUser === '') {
+            alert('Preencha todos os dados antes de alterar!');
+            return;
+        }
+
+        try {
+            const response = await axios.put(`http://localhost:8888/perfil?id=${id}`, objDataPutProfile);
+            console.log('Dados atualizados com sucesso:', response);
+        } catch (e) {
+            alert('Não foi possível alterar os dados no momento, por favor, tente mais tarde!');
+            console.error('Não foi possível alterar os dados do usuário', e);
+        }
     };
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            setPhotoUserState(URL.createObjectURL(file));
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPhotoUserState(reader.result as string);
+            };
+            reader.readAsDataURL(file);
         }
     };
+
 
     return (
         <section className="w-full mb-20 flex flex-col items-center">
@@ -91,6 +109,7 @@ export function ProfileId({ email, fullName, userNick, photoUser }: profileProps
                                     placeholder:Ky"
                                     type="text"
                                     value={fullNameState}
+                                    name="fullName"
                                     onChange={(e) => setFullNameState(e.target.value)}
                                     placeholder="Ex: João Silva Campos" />
                             </div>
@@ -103,6 +122,7 @@ export function ProfileId({ email, fullName, userNick, photoUser }: profileProps
                                     value={userState}
                                     onChange={(e) => setUserState(e.target.value)}
                                     type="text"
+                                    name="username"
                                     placeholder="Ex: joao.silva26" />
                             </div>
 
@@ -112,6 +132,7 @@ export function ProfileId({ email, fullName, userNick, photoUser }: profileProps
                                     className="w-80 p-2 outline outline-1 outline-black rounded-md text-black Ky
                                     placeholder:Ky"
                                     type="email"
+                                    name="email"
                                     onChange={(e) => setEmailState(e.target.value)}
                                     value={emailState}
                                     placeholder="Ex: joaos.campos@gmail.com" />

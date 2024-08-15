@@ -95,6 +95,7 @@ export function Perfil() {
         <>
             <Header />
             <ProfileId
+            id={userId ? userId : ''}
             fullName={userName ? userName : ''}
             email={userEmail ? userEmail : ''}
             userNick={userNick ? userNick : ''}
