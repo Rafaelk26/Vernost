@@ -11,8 +11,8 @@ interface User {
     cpf: string;
     status: boolean;
     photoUser: string;
+    isAdmin?: boolean;
 }
-//  isAdmin?: true;
 
 interface UserContextType {
     user: Partial<User> | null;
